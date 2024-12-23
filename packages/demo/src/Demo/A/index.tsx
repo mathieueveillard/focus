@@ -6,29 +6,29 @@ import { createLens } from '@focus/react-connect';
 import { ApplicationState, useGlobalState } from '../../main';
 
 const lens = createLens<ApplicationState, number>({
-  get: ({ b }) => b,
-  set: (state, b) => ({ ...state, b }),
+  get: ({ a }) => a,
+  set: (state, a) => ({ ...state, a }),
 });
 
 const Component: React.FunctionComponent = () => {
   const { state, updateState } = useGlobalState().focus(lens);
 
   const increment = (): void => {
-    console.log("[B] User clicks the 'Increment' button");
+    console.log("[A] User clicks the 'Increment' button");
     const state = updateState((n) => n + 1);
-    console.log('[B] New (synchronous) value for b: ', state);
+    console.log('[A] New (synchronous) value for a: ', state);
   };
 
   useEffect(() => {
-    console.log('[B] Component renders\n---------------------------');
+    console.log('[A] Component renders');
   });
 
   return (
     <div>
-      <H2>Component B</H2>
+      <H2>Component A</H2>
       <div className="flex gap-2">
-        <Code>b: {state}</Code>
-        <Button onClick={increment}>Increment b</Button>
+        <Code>a: {state}</Code>
+        <Button onClick={increment}>Increment a</Button>
       </div>
     </div>
   );

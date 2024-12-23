@@ -1,6 +1,6 @@
-import { StrictMode } from 'react';
-import * as ReactDOM from 'react-dom/client';
-import Demo from './app';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import Demo from './Demo';
 import { connect } from '@focus/react-connect';
 import './styles.css';
 
@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <StrictMode>
+  <React.StrictMode>
     <Demo />
-  </StrictMode>
+  </React.StrictMode>
 );

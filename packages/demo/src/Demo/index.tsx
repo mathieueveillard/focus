@@ -1,8 +1,8 @@
-import React from 'react';
-import A from './A';
-import B from './B';
-import GlobalState from './GlobalState';
-import H1 from './utils/H1';
+import React from "react";
+import A from "./A";
+import B from "./B";
+import GlobalState from "./GlobalState";
+import H1 from "./utils/H1";
 
 const Component: React.FunctionComponent = () => (
   <div className="m-10">
