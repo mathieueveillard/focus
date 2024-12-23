@@ -1,0 +1,12 @@
+{
+  "name": "demo-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "projectType": "application",
+    "sourceRoot": "packages/demo-e2e/src",
+    "implicitDependencies": [
+      "demo"
+    ]
+  }
+}

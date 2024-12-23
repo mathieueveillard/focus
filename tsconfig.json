@@ -11,6 +11,12 @@
     },
     {
       "path": "./packages/react-connect"
+    },
+    {
+      "path": "./packages/demo-e2e"
+    },
+    {
+      "path": "./packages/demo"
     }
   ]
 }
