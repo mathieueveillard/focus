@@ -9,8 +9,7 @@ export type Selector<State, R> = (state: State) => R;
 type FocusedStore<State> = {
   getState: () => State;
   select: <R>(selector: Selector<State, R>) => R;
-  updateState: (reducer: Reducer<State>) => void;
-  batchUpdates: (...reducers: Reducer<State>[]) => void;
+  updateState: (...reducers: Reducer<State>[]) => void;
   subscribe: (subscriber: Subscriber) => CleanUpFunction;
 };
 
@@ -32,7 +31,7 @@ export const createStore = <State>(
 
   const select = <R>(selector: Selector<State, R>) => selector(state);
 
-  const updateState = (reducer: Reducer<State>) => {
+  const _updateState = (reducer: Reducer<State>) => {
     const stateBeforeUpdate = state;
 
     state = reducer(state);
@@ -48,9 +47,8 @@ export const createStore = <State>(
     });
   };
 
-  const batchUpdates = (...reducers: Reducer<State>[]) => {
-    return updateState(flow(...reducers));
-  };
+  const _batchUpdates = (...reducers: Reducer<State>[]) =>
+    _updateState(flow(...reducers));
 
   const subscribe = (subscriber: Subscriber) => {
     subscribers = subscribers.append(subscriber);
@@ -63,11 +61,8 @@ export const createStore = <State>(
   const focus = <Focus>(lens: Lens<State, Focus>) => ({
     getState: () => lens.get(state),
     select: <R>(selector: Selector<Focus, R>) => selector(lens.get(state)),
-    updateState: (reducer: Reducer<Focus>) => {
-      updateState(lens.reduce(reducer));
-    },
-    batchUpdates: (...reducers: Reducer<Focus>[]) => {
-      batchUpdates(...reducers.map((reducer) => lens.reduce(reducer)));
+    updateState: (...reducers: Reducer<Focus>[]) => {
+      _batchUpdates(...reducers.map((reducer) => lens.reduce(reducer)));
     },
     subscribe,
   });
@@ -75,8 +70,7 @@ export const createStore = <State>(
   return {
     getState,
     select,
-    updateState,
-    batchUpdates,
+    updateState: _batchUpdates,
     subscribe,
     focus,
   };

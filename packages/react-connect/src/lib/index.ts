@@ -8,7 +8,7 @@ export const connect = <State>(initialState: State, logger: Logger = noop) => {
   const store = createStore(initialState, logger);
 
   const useGlobalState = () => {
-    const { getState, select, updateState, batchUpdates, subscribe } = store;
+    const { getState, select, updateState, subscribe } = store;
 
     const state = useSyncExternalStore(subscribe, getState);
 
@@ -17,18 +17,16 @@ export const connect = <State>(initialState: State, logger: Logger = noop) => {
       getSynchronousState: getState,
       select,
       updateState,
-      batchUpdates,
       focus: <Focus>(lens: Lens<State, Focus>) => {
         const focusedStore = store.focus(lens);
 
-        const { getState, select, updateState, batchUpdates } = focusedStore;
+        const { getState, select, updateState } = focusedStore;
 
         return {
           state: lens.get(state),
           getSynchronousState: getState,
           select,
           updateState,
-          batchUpdates,
         };
       },
     };

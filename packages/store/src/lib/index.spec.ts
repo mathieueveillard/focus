@@ -25,7 +25,7 @@ describe('Test of createStore', () => {
       const store = createStore<State>(initialState);
 
       // When
-      store.batchUpdates(
+      store.updateState(
         (state) => state + 3,
         (state) => state * 2,
         (state) => state - 1
@@ -133,7 +133,7 @@ describe('Test of createStore', () => {
       const focusedStore = store.focus(lens);
 
       // When
-      focusedStore.batchUpdates(
+      focusedStore.updateState(
         (state) => state + 3,
         (state) => state * 2,
         (state) => state - 1

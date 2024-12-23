@@ -30,6 +30,7 @@
     "strict": true,
     "target": "es2022",
     "verbatimModuleSyntax": false,
+    "baseUrl": ".",
     "paths": {
       "@focus/react-connect": ["packages/react-connect/src/index.ts"]
     }
