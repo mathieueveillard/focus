@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "jsx": "react",
     "outDir": "./out-tsc/vitest",
     "types": [
       "vitest/globals",
