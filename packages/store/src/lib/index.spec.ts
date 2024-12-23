@@ -80,6 +80,18 @@ describe('Test of createStore', () => {
       expect(first).not.toHaveBeenCalled();
       expect(second).toHaveBeenCalled();
     });
+
+    test('It should allow to derivate the state', () => {
+      // Given
+      const store = createStore<State>(initialState);
+
+      // When
+      const actual = store.select((state) => state + 1);
+
+      // Then
+      const expected = 1;
+      expect(actual).toEqual(expected);
+    });
   });
 
   describe('With focusing', () => {
@@ -93,12 +105,13 @@ describe('Test of createStore', () => {
       other: 'other',
     };
 
+    const lens = createLens<State, number>({
+      get: ({ count }) => count,
+      set: (state, count) => ({ ...state, count }),
+    });
+
     test('It should allow to update the state', () => {
       // Given
-      const lens = createLens<State, number>({
-        get: ({ count }) => count,
-        set: (state, count) => ({ ...state, count }),
-      });
       const store = createStore<State>(initialState);
       const focusedStore = store.focus(lens);
 
@@ -116,10 +129,6 @@ describe('Test of createStore', () => {
 
     test('It should allow to batch updates', () => {
       // Given
-      const lens = createLens<State, number>({
-        get: ({ count }) => count,
-        set: (state, count) => ({ ...state, count }),
-      });
       const store = createStore<State>(initialState);
       const focusedStore = store.focus(lens);
 
@@ -141,10 +150,6 @@ describe('Test of createStore', () => {
 
     test('It should notify its subscribers', () => {
       // Given
-      const lens = createLens<State, number>({
-        get: ({ count }) => count,
-        set: (state, count) => ({ ...state, count }),
-      });
       const store = createStore<State>(initialState).focus(lens);
       const subscriber = vi.fn();
       store.subscribe(subscriber);
@@ -158,10 +163,6 @@ describe('Test of createStore', () => {
 
     test('It should notify its subscribers (bis)', () => {
       // Given
-      const lens = createLens<State, number>({
-        get: ({ count }) => count,
-        set: (state, count) => ({ ...state, count }),
-      });
       const store = createStore<State>(initialState);
       const subscriber = vi.fn();
       store.subscribe(subscriber);
@@ -172,6 +173,18 @@ describe('Test of createStore', () => {
 
       // Then
       expect(subscriber).toHaveBeenCalled();
+    });
+
+    test('It should allow to derivate the state', () => {
+      // Given
+      const store = createStore<State>(initialState).focus(lens);
+
+      // When
+      const actual = store.select((state) => state + 1);
+
+      // Then
+      const expected = 1;
+      expect(actual).toEqual(expected);
     });
   });
 });
