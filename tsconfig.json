@@ -8,6 +8,9 @@
     },
     {
       "path": "./packages/store"
+    },
+    {
+      "path": "./packages/react-connect"
     }
   ]
 }
